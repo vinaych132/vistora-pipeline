@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vistora | Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Vistora</h1>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('cart') }}">🛒 Cart ({{ cart_data|length }})</a>
+    </nav>
+  </header>
+
+  <main>
+<div class="model-section">
+    <div class="category-buttons">
+      <a href="/category/tshirts" class="category-button">T-Shirts</a>
+      <a href="/category/trackpants" class="category-button">Track Pants</a>
+      <a href="/category/caps" class="category-button">Caps</a>
+      <a href="/category/hoodies" class="category-button">Hoodies</a>
+      <a href="/category/underwear" class="category-button">Underwear</a>
+<img src="{{ url_for('static', filename='images/vistora-model.png') }}" alt="VISTORA Look" class="model-img">
+
+    </div>
+  </main>
+
+</body>
+</html>

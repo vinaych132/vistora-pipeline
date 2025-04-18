@@ -1,0 +1,3 @@
+[submodule "vistora-pipeline/VISTORA"]
+	path = vistora-pipeline/VISTORA
+	url = https://github.com/vinaych132/VISTORA.git

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - VISTORA</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
+    header { background: #2c3e50; color: white; padding: 20px; font-size: 24px; }
+    .container { background: white; padding: 20px; margin: auto; width: 90%; max-width: 600px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input, select { padding: 10px; width: 90%; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #2980b9; }
+  </style>
+</head>
+<body>
+  <header>Checkout - VISTORA</header>
+  <div class="container">
+    <h2>Billing Information</h2>
+    <form id="checkoutForm">
+      <input type="text" placeholder="Full Name" required><br>
+      <input type="email" placeholder="Email" required><br>
+      <input type="text" placeholder="Shipping Address" required><br>
+      <input type="text" placeholder="City" required><br>
+      <input type="text" placeholder="Postal Code" required><br>
+      <input type="tel" placeholder="Phone Number" required><br>
+
+      <h3>Payment Method</h3>
+      <select required>
+        <option value="">Select Payment Method</option>
+        <option value="mock">Mock Payment Gateway</option>
+        <option value="cod">Cash on Delivery</option>
+      </select><br>
+
+      <p>Total Amount: $<span id="totalAmount">0</span></p>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("totalAmount").innerText = localStorage.getItem("cartTotal") || 0;
+
+    document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Order placed successfully! (Payment processing is mocked)");
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

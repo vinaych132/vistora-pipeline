@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: vistora
+    env: python
+    region: singapore
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production

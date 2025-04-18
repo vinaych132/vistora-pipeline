@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Hoodies Collection</h2>
+<div class="product-grid">
+  <div class="product-card">
+    <img src="{{ url_for('static', filename='images/hoodie1.jpg') }}" alt="Hoodie 1">
+    <h3>Grey Zip-Up Hoodie</h3>
+    <p>₹1,499</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="{{ url_for('static', filename='images/hoodie2.jpg') }}" alt="Hoodie 2">
+    <h3>Oversized Black Hoodie</h3>
+    <p>₹1,699</p>
+    <button>Add to Cart</button>
+  </div>
+</div>
+{% endblock %}

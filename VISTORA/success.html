@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Successful</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .checkmark-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #28a745;
+      display: inline-block;
+      position: relative;
+      animation: pop 0.5s ease-out forwards;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 35px;
+      left: 32px;
+      width: 50px;
+      height: 25px;
+      border-left: 5px solid white;
+      border-bottom: 5px solid white;
+      transform: rotate(-45deg);
+      animation: draw 0.5s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes draw {
+      to {
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #28a745;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .back-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkmark-circle">
+    <div class="checkmark"></div>
+  </div>
+
+  <h1>Payment Successful!</h1>
+  <p>Thank you for shopping with VISTORA.</p>
+
+  <button class="back-button" onclick="window.location.href='index.html'">Back to Home</button>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment Success</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #e6fff2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .success-box {
+      text-align: center;
+      animation: pop 0.6s ease-out forwards;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .checkmark {
+      font-size: 80px;
+      color: #28a745;
+      animation: bounce 1s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes pop {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="success-box">
+    <div class="checkmark">✅</div>
+    <h1>Payment Successful</h1>
+    <p>Thank you for shopping with VISTORA!</p>
+  </div>
+</body>
+</html>

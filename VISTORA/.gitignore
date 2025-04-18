@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Flask
+instance/
+*.sqlite3
+
+# Logs
+*.log
+
+# VSCode / IDEs
+.vscode/
+.idea/
+
+# Node or frontend builds (if any)
+node_modules/
+dist/
+build/
+
+# Image test folders (customize if needed)
+../images/
+../VISTORA

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VISTORA</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: url('assets/backgrounds/optimized_background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #ffc107;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 30px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      width: 280px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      border-radius: 12px;
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .product-card p {
+      font-size: 1.1rem;
+      color: #ddd;
+    }
+
+    .checkout-btn {
+      display: block;
+      margin: 30px auto;
+      padding: 15px 30px;
+      background: #ff5722;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 87, 34, 0.4);
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .checkout-btn:hover {
+      background: #e64a19;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .product-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to VISTORA</h1>
+    <p>Your premium shopping experience</p>
+  </header>
+
+  <section class="product-container">
+    <div class="product-card">
+      <img src="assets/images/headphones.jpg" alt="Headphones">
+      <h3>Premium Headphones</h3>
+      <p>₹4999</p>
+    </div>
+
+    <div class="product-card">
+      <img src="assets/images/smartwatch.jpg" alt="Smartwatch">
+      <h3>Smart Watch</h3>
+      <p>₹7999</p>
+    </div>
+
+    <div class="product-card">
+      <img src="assets/images/laptop.jpg" alt="Laptop">
+      <h3>Gaming Laptop</h3>
+      <p>₹74999</p>
+    </div>
+  </section>
+
+  <button class="checkout-btn" onclick="location.href='billing.html'">
+    Proceed to Checkout
+  </button>
+</body>
+</html>

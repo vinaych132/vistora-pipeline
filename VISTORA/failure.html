@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Failed</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff4f4;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .xmark-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #dc3545;
+      display: inline-block;
+      position: relative;
+      animation: pop 0.5s ease-out forwards;
+    }
+
+    .xmark {
+      position: absolute;
+      top: 38px;
+      left: 35px;
+      width: 50px;
+      height: 5px;
+      background: white;
+      transform: rotate(45deg);
+      animation: cross 0.5s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    .xmark::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 5px;
+      background: white;
+      transform: rotate(90deg);
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes cross {
+      to {
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #dc3545;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .retry-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .retry-button:hover {
+      background-color: #b52a36;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="xmark-circle">
+    <div class="xmark"></div>
+  </div>
+
+  <h1>Payment Failed</h1>
+  <p>Oops! Something went wrong with your transaction.</p>
+
+  <button class="retry-button" onclick="window.location.href='billing.html'">Try Again</button>
+
+</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Failed</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff4f4;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .xmark-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #dc3545;
+      display: inline-block;
+      position: relative;
+      animation: pop 0.5s ease-out forwards;
+    }
+
+    .xmark {
+      position: absolute;
+      top: 38px;
+      left: 35px;
+      width: 50px;
+      height: 5px;
+      background: white;
+      transform: rotate(45deg);
+      animation: cross 0.5s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    .xmark::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 5px;
+      background: white;
+      transform: rotate(90deg);
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes cross {
+      to {
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #dc3545;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .retry-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .retry-button:hover {
+      background-color: #b52a36;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="xmark-circle">
+    <div class="xmark"></div>
+  </div>
+
+  <h1>Payment Failed</h1>
+  <p>Oops! Something went wrong with your transaction.</p>
+
+  <button class="retry-button" onclick="window.location.href='billing.html'">Try Again</button>
+
+</body>
+</html>

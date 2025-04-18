@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Billing | Vistora</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #111;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #222;
+    }
+
+    form input, form select {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .summary, .payment-options {
+      margin-top: 2rem;
+    }
+
+    .summary ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .summary li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .payment-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .payment-icons label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .payment-icons img {
+      height: 32px;
+    }
+
+    .place-order {
+      display: inline-block;
+      margin-top: 2rem;
+      background-color: #111;
+      color: white;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .place-order:hover {
+      background-color: #333;
+    }
+
+    /* Modal for success animation */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Vistora</h1>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('cart') }}">🛒 Cart</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Billing Details</h2>
+    <form id="billing-form">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="text" name="address" placeholder="Shipping Address" required />
+      <input type="text" name="pincode" placeholder="PIN Code" required />
+    </form>
+
+    <div class="summary">
+      <h2>Order Summary</h2>
+      <ul>
+        {% for item in cart_data %}
+        <li>
+          <span>{{ item.name }}</span>
+          <span>₹{{ item.price }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <hr>
+      <p><strong>Total: ₹{{ cart_data | sum(attribute='price') }}</strong></p>
+    </div>
+
+    <div class="payment-options">
+      <h2>Choose Payment Method</h2>
+      <div class="payment-icons">
+        <label><input type="radio" name="payment" value="razorpay" required>
+          <img src="{{ url_for('static', filename='icons/razorpay.png') }}" alt="Razorpay">
+        </label>
+        <label><input type="radio" name="payment" value="visa">
+          <img src="{{ url_for('static', filename='icons/visa.png') }}" alt="Visa">
+        </label>
+        <label><input type="radio" name="payment" value="cod">
+          <img src="{{ url_for('static', filename='icons/cod.png') }}" alt="Cash on Delivery">
+        </label>
+      </div>
+    </div>
+
+    <button class="place-order" onclick="placeOrder()">Place Order</button>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal" id="successModal">
+    <div class="modal-content">
+      <h3>🎉 Order Placed Successfully!</h3>
+      <p>Thank you for shopping with Vistora.</p>
+    </div>
+  </div>
+
+  <script>
+    function placeOrder() {
+      event.preventDefault();
+      const modal = document.getElementById("successModal");
+      modal.style.display = "flex";
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

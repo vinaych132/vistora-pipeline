@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VISTORA - Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to VISTORA</h1>
+        <p>Explore our wide range of products</p>
+
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="{{ category }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ category.replace('-', ' ').title() }}</h5>
+                            <a href="{{ url_for('category_page', category_name=category) }}" class="btn btn-primary">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

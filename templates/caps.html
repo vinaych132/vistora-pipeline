@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Caps Collection</h2>
+<div class="product-grid">
+  <div class="product-card">
+    <img src="{{ url_for('static', filename='images/cap1.jpg') }}" alt="Cap 1">
+    <h3>Classic Black Cap</h3>
+    <p>₹499</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="{{ url_for('static', filename='images/cap2.jpg') }}" alt="Cap 2">
+    <h3>White Logo Cap</h3>
+    <p>₹599</p>
+    <button>Add to Cart</button>
+  </div>
+</div>
+{% endblock %}
