@@ -1,25 +1,8 @@
-from flask import Flask, render_template, session, redirect, url_for, request, Response
+from flask import Flask, render_template, session, redirect, url_for, request
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'your_secret_key'  # Required for session management
 
-# 🔐 Password Gate Setup
-USERNAME = "vistora"
-PASSWORD = "secret123"  # Change this to your own secure password
-
-def check_auth(username, password):
-    return username == USERNAME and password == PASSWORD
-
-def authenticate():
-    return Response(
-        "Authentication Required", 401,
-        {"WWW-Authenticate": 'Basic realm="Login Required"'})
-
-@app.before_request
-def require_auth():
-    auth = request.authorization
-    if not auth or not check_auth(auth.username, auth.password):
-        return authenticate()
 # Route to display products for a specific category
 @app.route('/category/<category_name>')
 def category(category_name):

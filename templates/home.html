@@ -2,12 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vistora | Home</title>
+  <title>CARENS FASHION | Home</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    .category-button {
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 5px;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .category-button:hover {
+      background-color: #555;
+    }
+
+    .model-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .model-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Vistora</h1>
+    <h1>CARENS FASHION</h1>
     <nav>
       <a href="{{ url_for('home') }}">Home</a>
       <a href="{{ url_for('cart') }}">🛒 Cart ({{ cart_data|length }})</a>
@@ -15,15 +45,15 @@
   </header>
 
   <main>
-<div class="model-section">
-    <div class="category-buttons">
-      <a href="/category/tshirts" class="category-button">T-Shirts</a>
-      <a href="/category/trackpants" class="category-button">Track Pants</a>
-      <a href="/category/caps" class="category-button">Caps</a>
-      <a href="/category/hoodies" class="category-button">Hoodies</a>
-      <a href="/category/underwear" class="category-button">Underwear</a>
-<img src="{{ url_for('static', filename='images/vistora-model.png') }}" alt="VISTORA Look" class="model-img">
-
+    <div class="model-section">
+      <div class="category-buttons">
+            <a href="/category/tshirts" class="category-button">T-Shirts</a>
+            <a href="/category/trackpants" class="category-button">Track Pants</a>
+            <a href="/category/caps" class="category-button">Caps</a>
+            <a href="/category/hoodies" class="category-button">Hoodies</a>
+            <a href="/category/underwear" class="category-button">Underwear</a>
+      </div>
+           <img src="{{ url_for('static', filename='images/carens-fashion-model.png') }}" alt="CARENS FASHION Look" class="model-img">
     </div>
   </main>
 
