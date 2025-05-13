@@ -38,27 +38,15 @@
             border-radius: 8px;
         }
 
-        tr.fade-in {
-            animation: slideIn 0.4s ease forwards;
+        .qty-btn {
+            padding: 4px 10px;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .fade-out {
-            animation: fadeOut 0.5s forwards;
-        }
-
-        @keyframes fadeOut {
-            from { opacity: 1; height: auto; }
-            to { opacity: 0; height: 0; overflow: hidden; }
+        .shipping-estimate, .coupon-section {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px dashed #ccc;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -81,13 +69,23 @@
     <div class="cart-card">
         <h2 class="mb-4">Your Shopping Cart</h2>
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
         {% if cart_data %}
+        <form method="POST">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Product</th>
                         <th>Image</th>
                         <th>Price</th>
+                        <th>Size</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Remove</th>
@@ -95,14 +93,31 @@
                 </thead>
                 <tbody>
                     {% for item in cart_data %}
-                    <tr class="fade-in">
+                    <tr>
                         <td>{{ item.name }}</td>
                         <td><img src="{{ url_for('static', filename='images/' ~ item.image) }}" class="cart-image"></td>
                         <td>₹{{ item.price }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                            <select class="form-select size-selector" data-item="{{ item.name }}">
+                                {% for size in ['S', 'M', 'L', 'XL'] %}
+                                    <option value="{{ size }}" {% if item.size == size %}selected{% endif %}>{{ size }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <form action="{{ url_for('update_quantity', item_name=item.name, action='decrement') }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-secondary qty-btn">-</button>
+                                </form>
+                                <span class="mx-2">{{ item.quantity }}</span>
+                                <form action="{{ url_for('update_quantity', item_name=item.name, action='increment') }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-secondary qty-btn">+</button>
+                                </form>
+                            </div>
+                        </td>
                         <td>₹{{ item.price * item.quantity }}</td>
                         <td>
-                            <form action="{{ url_for('remove_from_cart', item_name=item.name) }}" method="POST" class="remove-form">
+                            <form action="{{ url_for('remove_from_cart', item_name=item.name) }}" method="POST">
                                 <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                             </form>
                         </td>
@@ -110,31 +125,82 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </form>
 
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <h4>Total: ₹{{ total_price }}</h4>
-                <div>
-                    <form action="{{ url_for('clear_cart') }}" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-outline-secondary">Clear Cart</button>
-                    </form>
-                    <a href="{{ url_for('billing') }}" class="btn btn-success ms-2">Proceed to Checkout</a>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4>Total: ₹{{ total_price }}</h4>
+            {% if coupon %}
+                <h5 class="text-success">Coupon Applied: {{ coupon }}</h5>
+            {% endif %}
+            {% if shipping_charge > 0 %}
+                <h6 class="text-muted">Shipping: ₹{{ shipping_charge }}</h6>
+            {% endif %}
+            {% if coupon_discount > 0 %}
+                <h6 class="text-success">Discount: ₹{{ coupon_discount }}</h6>
+            {% endif %}
+            <h4 class="ms-auto">Grand Total: ₹{{ grand_total }}</h4>
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+            <form action="{{ url_for('clear_cart') }}" method="POST">
+                <button type="submit" class="btn btn-danger">Clear Cart</button>
+            </form>
+            <a href="{{ url_for('billing') }}" class="btn btn-success">Proceed to Checkout</a>
+        </div>
+
+        <div class="shipping-estimate">
+            <h5>Shipping Estimate</h5>
+            <form action="{{ url_for('estimate_shipping') }}" method="POST" class="row g-3">
+                <div class="col-md-6">
+                    <input type="text" name="pincode" class="form-control" placeholder="Enter your Pincode" required>
                 </div>
-            </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-primary" type="submit">Estimate</button>
+                </div>
+            </form>
+            {% if shipping_estimate %}
+            <p class="mt-2 text-muted">Estimated Shipping: {{ shipping_estimate }}</p>
+            {% endif %}
+        </div>
+
+        <div class="coupon-section">
+            <h5>Apply Coupon</h5>
+            <form action="{{ url_for('apply_coupon') }}" method="POST">
+                <div class="input-group">
+                    <input type="text" name="coupon_code" class="form-control" placeholder="Enter coupon code">
+                    <button class="btn btn-primary" type="submit">Apply</button>
+                </div>
+            </form>
+        </div>
         {% else %}
-            <p>Your cart is empty.</p>
+            <p>Your cart is empty. Add some items to your cart!</p>
         {% endif %}
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Optional: Animate fade-out on remove
-    document.querySelectorAll('.remove-form').forEach(form => {
-        form.addEventListener('submit', e => {
-            const row = form.closest('tr');
-            row.classList.add('fade-out');
+    // Handle real-time size update
+    document.querySelectorAll('.size-selector').forEach(select => {
+        select.addEventListener('change', function () {
+            const itemName = this.dataset.item;
+            const newSize = this.value;
+
+            fetch('{{ url_for("update_size") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ item_name: itemName, new_size: newSize })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(`Size updated for ${itemName} to ${newSize}`);
+                }
+            });
         });
     });
 </script>
-
 </body>
 </html>
