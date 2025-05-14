@@ -8,7 +8,7 @@ app.secret_key = 'your_secret_key'
 def home():
     return render_template('home.html', cart_data=session.get('cart', []))
 
-# Category route to display products based on category
+# Category route
 @app.route('/category/<category_name>')
 def category(category_name):
     products = {
@@ -20,23 +20,23 @@ def category(category_name):
             {'name': 'Slim Trackpant', 'price': 799, 'image': 'trackpant.jpg'},
             {'name': 'Sport Trackpant', 'price': 899, 'image': 'trackpant2.jpg'}
         ],
-        'caps': [
-            {'name': 'Basic Cap', 'price': 299, 'image': 'cap1.jpg'},
-            {'name': 'Snapback Cap', 'price': 399, 'image': 'cap2.jpg'}
-        ],
         'hoodies': [
             {'name': 'Classic Hoodie', 'price': 999, 'image': 'hoodie.jpg'},
             {'name': 'Zipped Hoodie', 'price': 1199, 'image': 'hoodie2.jpg'}
         ],
-        'underwear': [
-            {'name': 'Cotton Briefs', 'price': 199, 'image': 'underwear.jpg'},
-            {'name': 'Boxer Shorts', 'price': 299, 'image': 'underwear2.jpg'}
+        'shirts': [
+            {'name': 'Formal Shirt', 'price': 699, 'image': 'shirt1.jpg'},
+            {'name': 'Casual Check Shirt', 'price': 799, 'image': 'shirt2.jpg'}
+        ],
+        'trousers': [
+            {'name': 'Slim Fit Trouser', 'price': 899, 'image': 'trouser1.jpg'},
+            {'name': 'Chino Trouser', 'price': 999, 'image': 'trouser2.jpg'}
         ]
     }
     items = products.get(category_name, [])
     return render_template('category.html', category_name=category_name.capitalize(), items=items, cart_count=len(session.get('cart', [])))
 
-# Add item to cart
+# Add to cart
 @app.route('/add_to_cart/<item_name>', methods=['POST'])
 def add_to_cart(item_name):
     item_catalog = {
@@ -44,12 +44,12 @@ def add_to_cart(item_name):
         'V-Neck Tee': {'name': 'V-Neck Tee', 'price': 599, 'image': 'tshirt2.jpg'},
         'Slim Trackpant': {'name': 'Slim Trackpant', 'price': 799, 'image': 'trackpant.jpg'},
         'Sport Trackpant': {'name': 'Sport Trackpant', 'price': 899, 'image': 'trackpant2.jpg'},
-        'Basic Cap': {'name': 'Basic Cap', 'price': 299, 'image': 'cap1.jpg'},
-        'Snapback Cap': {'name': 'Snapback Cap', 'price': 399, 'image': 'cap2.jpg'},
         'Classic Hoodie': {'name': 'Classic Hoodie', 'price': 999, 'image': 'hoodie.jpg'},
         'Zipped Hoodie': {'name': 'Zipped Hoodie', 'price': 1199, 'image': 'hoodie2.jpg'},
-        'Cotton Briefs': {'name': 'Cotton Briefs', 'price': 199, 'image': 'underwear.jpg'},
-        'Boxer Shorts': {'name': 'Boxer Shorts', 'price': 299, 'image': 'underwear2.jpg'}
+        'Formal Shirt': {'name': 'Formal Shirt', 'price': 699, 'image': 'shirt1.jpg'},
+        'Casual Check Shirt': {'name': 'Casual Check Shirt', 'price': 799, 'image': 'shirt2.jpg'},
+        'Slim Fit Trouser': {'name': 'Slim Fit Trouser', 'price': 899, 'image': 'trouser1.jpg'},
+        'Chino Trouser': {'name': 'Chino Trouser', 'price': 999, 'image': 'trouser2.jpg'}
     }
 
     item = item_catalog.get(item_name)
@@ -63,23 +63,22 @@ def add_to_cart(item_name):
                 break
         if not found:
             item['quantity'] = 1
-            item['size'] = 'M'  # Default size
+            item['size'] = 'M'
             cart_data.append(item)
         session['cart'] = cart_data
     return redirect(url_for('cart'))
 
-# Cart page to show added items
+# Cart route
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
     cart_data = session.get('cart', [])
     coupon_discount = 0
     shipping_charge = 0
 
-    if request.method == 'POST':
-        if 'coupon_code' in request.form:
-            coupon = request.form['coupon_code'].strip().upper()
-            if coupon == 'SAVE100':
-                session['coupon'] = 'SAVE100'
+    if request.method == 'POST' and 'coupon_code' in request.form:
+        coupon = request.form['coupon_code'].strip().upper()
+        if coupon == 'SAVE100':
+            session['coupon'] = 'SAVE100'
 
     total_price = sum(item['price'] * item['quantity'] for item in cart_data)
 
@@ -102,7 +101,6 @@ def cart():
         shipping_estimate=session.get('shipping_estimate', '')
     )
 
-# Update quantity of item in cart
 @app.route('/update_quantity/<item_name>/<action>', methods=['POST'])
 def update_quantity(item_name, action):
     cart_data = session.get('cart', [])
@@ -116,7 +114,6 @@ def update_quantity(item_name, action):
     session['cart'] = cart_data
     return redirect(url_for('cart'))
 
-# Update size of item in cart
 @app.route('/update_size', methods=['POST'])
 def update_size():
     data = request.get_json()
@@ -131,7 +128,6 @@ def update_size():
     session.modified = True
     return jsonify({'success': True})
 
-# Estimate shipping cost based on pincode
 @app.route('/estimate_shipping', methods=['POST'])
 def estimate_shipping():
     pincode = request.form.get('pincode')
@@ -144,7 +140,6 @@ def estimate_shipping():
     session['shipping_estimate'] = estimate
     return redirect(url_for('cart'))
 
-# Remove item from cart
 @app.route('/remove_from_cart/<item_name>', methods=['POST'])
 def remove_from_cart(item_name):
     cart_data = session.get('cart', [])
@@ -152,7 +147,6 @@ def remove_from_cart(item_name):
     session['cart'] = cart_data
     return redirect(url_for('cart'))
 
-# Clear all items from cart
 @app.route('/clear_cart', methods=['POST'])
 def clear_cart():
     session.pop('cart', None)
@@ -160,7 +154,6 @@ def clear_cart():
     session.pop('shipping_estimate', None)
     return redirect(url_for('cart'))
 
-# Billing page to show payment options
 @app.route('/billing')
 @app.route('/checkout')
 def billing():
@@ -168,7 +161,6 @@ def billing():
     total_price = sum(item['price'] * item['quantity'] for item in cart_data)
     return render_template('billing.html', cart_data=cart_data, total_price=total_price)
 
-# Apply coupon to cart
 @app.route('/apply_coupon', methods=['POST'])
 def apply_coupon():
     coupon_code = request.form.get('coupon_code')
@@ -179,6 +171,5 @@ def apply_coupon():
         flash('Invalid coupon code.', 'danger')
     return redirect(url_for('cart'))
 
-# Main entry point to run the app
 if __name__ == '__main__':
     app.run(debug=True)
